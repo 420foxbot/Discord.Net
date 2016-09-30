@@ -17,7 +17,7 @@ class Program
 		};
 
 		_client.ExecuteAndWait(async () => {
-			await _client.Connect("aaaaabbbbbbcccccdddddeeeeefffffggggg")
+			await _client.Connect("aaaaabbbbbbcccccdddddeeeeefffffggggg", TokenType.Bot)
 		});
 	}
 }
