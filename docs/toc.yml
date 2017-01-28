@@ -3,6 +3,8 @@
   href: guides/
 - name: Migrating
   href: migrating.md
+- name: Development Guidelines
+  href: guidelines/
 - name: API Documentation
   href: api/
   homepage: api/index.md
