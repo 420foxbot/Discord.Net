@@ -17,9 +17,9 @@ public feed, it is recommended to design your addons around these guidelines.
 **not** accept an IDependencyMap as a constructor. All dependencies should be
 named individually.
 	```cs
-	// Non-Example
+	// Don't
 	public GameModuleBase(IDependencyMap) { }
-	// Example
+	// Do
 	public GameModuleBase(IGameService gameService, IGameConfiguration config) { }
 	```
 
@@ -34,7 +34,7 @@ of the addon (e.g. service classes, TypeReaders)
 	 return Commands.AddModuleAsync<T>();
 	}
 	```
-	
+
 5. Addons should adhere to the service-module pattern, as defined in the bot
 guidelines
 6. Addons that create commands should **not** do so without exposing an
@@ -52,7 +52,7 @@ method for both Discord.Net's log output, and any addons.
 	- For example, an addon should not modify the permissions of a Text Channel
 	unless it is clearly documented that this will happen.
 10. Addons that communicate with an external API should not store any of the 
-consumer's information (e.g. API keys) independently.
+consumer's information (e.g. API keys) persistently.
 11. Additionally, addons should not communicate any private information related
 to the bot, e.g. the bot's token
 12. Addons should not attempt to circumvent ratelimits or otherwise abuse 
