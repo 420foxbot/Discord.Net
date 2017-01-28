@@ -1,6 +1,6 @@
 # Addon Design Guidelines
 
->[!WARN]
+>![WARN]
 >This document is a work-in-progress!
 
 These are guidelines that addon developers should adhere to before submitting 
@@ -16,23 +16,23 @@ public feed, it is recommended to design your addons around these guidelines.
 3. Should your addon contain a module that depends on any services, it should
 **not** accept an IDependencyMap as a constructor. All dependencies should be
 named individually.
-```cs
-// Non-Example
-public GameModuleBase(IDependencyMap) { }
-// Example
-public GameModuleBase(IGameService gameService, IGameConfiguration config) { }
-```
+	```cs
+	// Non-Example
+	public GameModuleBase(IDependencyMap) { }
+	// Example
+	public GameModuleBase(IGameService gameService, IGameConfiguration config) { }
+	```
 4. Addons should provide an extension method that constructs any prerequisites
 of the addon (e.g. service classes, TypeReaders)
-```cs
-public static Task UseGameService<T>(this CommandService commands, IDependencyMap map)
-	where T : GameModuleBase
-{
-	map.Add(new GameSerivce());
-	commands.AddTypeReader<GameTypeReader>(new GameTypeReader());
-	return Commands.AddModuleAsync<T>();
-}
-```
+	```cs
+	public static Task UseGameService<T>(this CommandService commands, IDependencyMap map)
+		where T : GameModuleBase
+	{
+		map.Add(new GameSerivce());
+		commands.AddTypeReader<GameTypeReader>(new GameTypeReader());
+		return Commands.AddModuleAsync<T>();
+	}
+	```
 5. Addons should adhere to the service-module pattern, as defined in the bot
 guidelines
 6. Addons that create commands should **not** do so without exposing an

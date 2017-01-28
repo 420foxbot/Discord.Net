@@ -30,6 +30,7 @@
         "files": [
           "guides/**.md",
           "guides/**/toc.yml",
+          "guidelines/**.md",
           "toc.yml",
           "*.md"
         ],
