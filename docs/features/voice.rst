@@ -42,7 +42,7 @@ Joining Voice Channels is pretty straight-forward, and is required to send Audio
 	var voiceChannel = _client.FindServers("Music Bot Server").FirstOrDefault().VoiceChannels.FirstOrDefault(); // Finds the first VoiceChannel on the server 'Music Bot Server'
 
 	var _vClient = await _client.GetService<AudioService>() // We use GetService to find the AudioService that we installed earlier. In previous versions, this was equivelent to _client.Audio()
-		.Join(VoiceChannel); // Join the Voice Channel, and return the IAudioClient.
+		.Join(voiceChannel); // Join the Voice Channel, and return the IAudioClient.
 
 The client will sustain a connection to this channel until it is kicked, disconnected from Discord, or told to Disconnect.
 
