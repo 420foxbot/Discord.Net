@@ -4,7 +4,7 @@
 >This document is a work-in-progress!
 
 These are guidelines that addon developers should adhere to before submitting 
-their addon for display on the addon feed.
+their addon to NuGet or the development MyGet feed.
 
 For the sake of consistency, even if your addon is not being submitted to our 
 public feed, it is recommended to design your addons around these guidelines.
@@ -14,22 +14,21 @@ public feed, it is recommended to design your addons around these guidelines.
 	- For example, an addon named 'EmojiTools' would have the root namespace
 	`Discord.Addons.EmojiTools`
 3. Should your addon contain a module that depends on any services, it should
-**not** accept an IDependencyMap as a constructor. All dependencies should be
+**not** accept an IServiceProvider as a constructor. All dependencies should be
 named individually.
 	```cs
 	// Don't
-	public GameModuleBase(IDependencyMap) { }
+	public GameModuleBase(IServiceProvider services) { }
 	// Do
 	public GameModuleBase(IGameService gameService, IGameConfiguration config) { }
 	```
 
 4. Addons should provide an extension method that constructs any prerequisites
-of the addon (e.g. service classes, TypeReaders)
+of the addon (e.g. TypeReaders)
 	```cs
-	public static Task UseGameService<T>(this CommandService commands, IDependencyMap map)
+	public static Task UseGameService<T>(this CommandService commands)
 	 where T : GameModuleBase
 	{
-	 map.Add(new GameSerivce());
 	 commands.AddTypeReader<GameTypeReader>(new GameTypeReader());
 	 return Commands.AddModuleAsync<T>();
 	}
@@ -43,11 +42,12 @@ underlying service
 	extension method, `CommandService.UseHelpCommand`, and a service,
 	`HelpService`. 
 	- The addon's commands should not contain any logic; all logic should
-	be placed in the service
+	be placed in the service, so that the end-user is not constrained to
+	the exact configuration of your commands in order to utilize your addon
 7. An addon should accept an optional `Func<LogMessage, Task>` for logging. This
 allows consumers of the addon to use their own logging framework, and have one
 method for both Discord.Net's log output, and any addons.
-8. The public API of an addon should be documented
+8. The public API of an addon should be documented, or an example should be provided
 9. Addons should not mutate anything on Discord without clear documentation
 	- For example, an addon should not modify the permissions of a Text Channel
 	unless it is clearly documented that this will happen.
@@ -59,3 +59,17 @@ to the bot, e.g. the bot's token
 external APIs
 
 [NuGet Naming Scheme]: https://docs.microsoft.com/en-us/nuget/create-packages/creating-a-package#choosing-a-unique-package-identifier-and-setting-the-version-number
+
+
+### Sample Addons
+
+The following are addons that have been reviewed as compliant with the above terms,
+and are a good example to design your own addons off of:
+
+- [MpGame] (Joe4evr) - Complex, customizable interactive game engine
+- [Interactive] (foxbot) - Modular engine for commands that interact with the user
+
+
+[MpGame]: https://github.com/Joe4evr/Discord.Addons/tree/master/src/Discord.Addons.MpGame
+[Interactive]: https://github.com/foxbot/Discord.Addons.Interactive
+
